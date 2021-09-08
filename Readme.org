@@ -1,0 +1,9 @@
+#+TITLE: terraform random chores
+#+DATE: Wednesday, Sep 08 2021
+
+Just another dummy terraform repo to test terraform chores.
+
+- *test-helm-chart*
+  
+  Sick of errors like: [[./test-helm-chart/helm-chart-error.png]]
+  this will help me quick test helm chart and versions
