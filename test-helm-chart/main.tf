@@ -1,7 +1,7 @@
 
 provider "helm"{
   kubernetes {
-    config_path = "~/.kube/config.d/kind/cicd-argo.config" 
+    config_path = "~/.kube/config"
   }
 }
 
@@ -11,4 +11,13 @@ resource "helm_release" "clusterautoscaler" {
   chart      = "cluster-autoscaler"
   version    = "9.10.6"
   namespace  = "kube-system" 
+}
+
+resource "helm_release" "argocd" {
+  name             = "argocd"
+  repository       = "https://argoproj.github.io/argo-helm"
+  chart            = "argo-cd"
+  namespace        = "argocd"
+  create_namespace = true
+  version          = "4.9.11"
 }
