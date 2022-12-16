@@ -1,0 +1,25 @@
+* terraform layout
+#+DATE: Friday, Dec 16 2022
+
+
+** Layout
+  #+begin_src bash :results drawer
+  tree -L 2 .
+  #+end_src
+
+  #+RESULTS:
+  :results:
+  .
+  |-- ReadME.org
+  |-- environments
+  |   |-- production
+  |   |-- qa
+  |   `-- staging
+  `-- modules
+      |-- api
+      |-- cache
+      |-- database
+      `-- network
+
+  9 directories, 1 file
+  :end:
