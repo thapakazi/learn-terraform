@@ -23,3 +23,18 @@
 
   9 directories, 1 file
   :end:
+
+*** Notes
+  - */environments* folder
+    - PROs: easy to make changes specific to environment
+      - just need to go env specific folder and make modifications
+    - CONs:
+      - env can diverse(go different direction) easily
+
+** Branching
+   - main is stable branch
+     - create your branch and send a pr
+     - pr preview be available on PR via github actions or similar
+
+** Shared resources
+  Shared resource across environments can configured inside environments
