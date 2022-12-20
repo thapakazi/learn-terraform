@@ -1,49 +1,32 @@
-name: "Terraform"
+name: Terraform Chores
+
 on:
-  push:
-    branches:
-  pull_request:
+  workflow_call:
+    inputs:
+      workdir:
+        required: true
+        type: string
 
 jobs:
   terraform:
-    name: "Terraform"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
         with:
-          fetch-depth: 0
+          # terraform_version: 0.13.0:
+          cli_config_credentials_token: ${{ secrets.TFC_API_TOKEN }}
 
-      # - name: Setup Terraform
-      #   uses: hashicorp/setup-terraform@v2
-      #   with:
-      #     # terraform_version: 0.13.0:
-      #     cli_config_credentials_token: ${{ secrets.TFC_API_TOKEN }}
+      - name: Terraform Format
+        id: fmt
+        run: cd ${{ inputs.workdir }} &&  terraform fmt -check
 
-      - name: Run changed-files with dir_names
-        id: changed-files-dir-names
-        uses: tj-actions/changed-files@v35
-        with:
-          dir_names: "true"
-          files: |
-            *.tf 
-            *.tlp
-            !*.md
-            environments/**
-
-      - name: List all changed files
-        run: |
-          for file in ${{ steps.changed-files-dir-names.outputs.all_changed_files }}; do
-            echo "$file was changed"
-          done
-          
-      # - name: Terraform Format
-      #   id: fmt
-      #   run: cd environments/staging/ &&  terraform fmt -check
-
-      # - name: Terraform Init
-      #   id: init
-      #   run: cd environments/staging/ &&  terraform init
+      - name: Terraform Init
+        id: init
+        run: cd environments/staging/ &&  terraform init
       
       # - name: Terraform Validate
       #   id: validate
