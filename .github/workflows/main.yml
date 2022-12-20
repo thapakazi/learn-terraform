@@ -44,6 +44,6 @@ jobs:
     uses: ./.github/workflows/terraform.yml
     if: needs.grep_changeset.outputs.any_changed == 'true'
     with:
-      changed_dir: ${{ matrix.changed_dir }}
+      work_dir: ${{ matrix.changed_dir }}
     
   

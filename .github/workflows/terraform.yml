@@ -3,7 +3,7 @@ name: Terraform Chores
 on:
   workflow_call:
     inputs:
-      workdir:
+      work_dir:
         required: true
         type: string
 
