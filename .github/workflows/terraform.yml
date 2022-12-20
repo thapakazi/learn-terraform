@@ -14,29 +14,33 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
-        with:
-          # terraform_version: 0.13.0:
-          cli_config_credentials_token: ${{ secrets.TFC_API_TOKEN }}
+      # - name: Setup Terraform
+      #   uses: hashicorp/setup-terraform@v2
+      #   with:
+      #     # terraform_version: 0.13.0:
+      #     cli_config_credentials_token: ${{ secrets.TFC_API_TOKEN }}
 
       - name: Terraform Format
         id: fmt
-        run: cd ${{ inputs.workdir }} &&  terraform fmt -check
+        run: terraform fmt -check
+        working-directory: ${{ inputs.work_dir }}
 
       - name: Terraform Init
         id: init
-        run: cd environments/staging/ &&  terraform init
+        run: terraform init
+        working-directory: ${{ inputs.work_dir }}
       
-      # - name: Terraform Validate
-      #   id: validate
-      #   run: cd environments/staging/ &&  terraform validate -no-color
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+        working-directory: ${{ inputs.work_dir }}
 
-      # - name: Terraform Plan
-      #   id: plan
-      #   if: github.event_name == 'pull_request'
-      #   run: cd environments/staging/ && terraform plan -no-color -input=false
-      #   continue-on-error: true
+      - name: Terraform Plan
+        id: plan
+        #if: github.event_name == 'pull_request'
+        run: terraform plan -no-color -input=false
+        working-directory: ${{ inputs.work_dir }}
+        continue-on-error: true
 
       # - uses: actions/github-script@v6
       #   if: github.event_name == 'pull_request'
