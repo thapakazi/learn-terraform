@@ -42,6 +42,7 @@ jobs:
       matrix:
         changed_dir: [ "${{needs.grep_changeset.outputs.changed_dirs}}" ]
     uses: ./.github/workflows/terraform.yml
+    secrets: inherit
     if: needs.grep_changeset.outputs.any_changed == 'true'
     with:
       work_dir: ${{ matrix.changed_dir }}
