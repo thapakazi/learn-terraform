@@ -40,7 +40,7 @@ jobs:
     needs: grep_changeset
     strategy:
       matrix:
-        changed_dir: [ needs.grep_changeset.outputs.changed_dirs ]
+        changed_dir: [ "${{needs.grep_changeset.outputs.changed_dirs}}" ]
     uses: ./.github/workflows/terraform.yml
     if: needs.grep_changeset.outputs.any_changed == 'true'
     with:
