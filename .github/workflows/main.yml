@@ -8,6 +8,10 @@ jobs:
   grep_changeset:
     name: "Grep change set"
     runs-on: ubuntu-latest
+    outputs:
+      changed_dirs: ${{ steps.changed-files-dir-names.outputs.all_changed_files}}
+      any_changed: ${{ steps.changed-files-dir-names.outputs.any_changed }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -33,11 +37,12 @@ jobs:
           done
   
   invoke-terrafom-workflow:
+    needs: grep_changeset
     strategy:
       matrix:
-        changed_dir: [ steps.changed-files-dir-names.outputs.all_changed_files ]
+        changed_dir: [ needs.grep_changeset.outputs.changed_dirs ]
     uses: ./.github/workflows/terraform.yml
-    if: steps.changed-files-dir-names.outputs.any_changed == 'true'
+    if: needs.grep_changeset.outputs.any_changed == 'true'
     with:
       changed_dir: ${{ matrix.changed_dir }}
     
