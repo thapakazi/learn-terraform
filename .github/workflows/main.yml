@@ -19,6 +19,7 @@ jobs:
         uses: tj-actions/changed-files@v35
         with:
           dir_names: "true"
+          separator: ","
           files: |
             *.tf
             *.tlp
@@ -34,7 +35,7 @@ jobs:
   invoke-terrafom-workflow:
     strategy:
       matrix:
-        changed_dir: ${{ steps.changed-files-dir-names.outputs.all_changed_files }}
+        changed_dir: [ steps.changed-files-dir-names.outputs.all_changed_files ]
     uses: ./.github/workflows/terraform.yml
     if: steps.changed-files-dir-names.outputs.any_changed == 'true'
     with:
