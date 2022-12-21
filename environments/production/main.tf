@@ -14,6 +14,7 @@ module "api" {
   source = "../../modules/api"
 }
 
+
 output "api_random_hash" {
   value = module.api.api_string
 }
