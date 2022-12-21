@@ -6,8 +6,8 @@ on:
       work_dir:
         required: true
         type: string
-env:
-  TF_LOG: debug
+# env:
+#   TF_LOG: debug
 
 jobs:
   terraform:
