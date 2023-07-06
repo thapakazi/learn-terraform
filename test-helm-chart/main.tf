@@ -21,3 +21,12 @@ resource "helm_release" "argocd" {
   create_namespace = true
   version          = "4.9.11"
 }
+
+resource "helm_release" "ebs_csi_dirver" {
+  name             = "argocd"
+  repository       = "https://kubernetes-sigs.github.io/aws-ebs-csi-driver"
+  chart            = "aws-ebs-csi-driver"
+  namespace        = "kube-system"
+  create_namespace = true
+  version          = "2.20.0"
+}
